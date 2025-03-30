@@ -7,23 +7,31 @@ app = Flask(__name__)
 CORS(app=app)
 
 TEST_IPN = "4889fcb1-8fbb-4a7f-90cd-dc2c7a7d2b9b"
-CALLBACK_URL = "http://localhost:5173/payment-status"
-# CALLBACK_URL = "https://verseresidence.com/payment-status"
+# CALLBACK_URL = "http://localhost:5173/payment-status"
+CALLBACK_URL = "https://verseresidence.com/payment-status"
 
 # Getting access token
 def get_access_token():
-    url = "https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken"
-        # url = "https://pay.pesapal.com/v3/api/Auth/RequestToken"  
+    # url = "https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken"
+    url = "https://pay.pesapal.com/v3/api/Auth/RequestToken"  
     
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
 
+
     payload = {
-        "consumer_key": "qkio1BGGYAXTu2JOfm7XSXNruoZsrqEW",
-        "consumer_secret": "osGQ364R49cXKeOYSpaOnT++rHs="
+        "consumer_key": "RbHilRmFzIuGiTqmTD/NWyMFHc8/K1wb",
+        "consumer_secret": "+/OSjta7tgObAG6c+iDI+c3cAAw="
     }
+
+
+
+    # payload = {
+    #     "consumer_key": "qkio1BGGYAXTu2JOfm7XSXNruoZsrqEW",
+    #     "consumer_secret": "osGQ364R49cXKeOYSpaOnT++rHs="
+    # }
 
     response = requests.post(url, json=payload, headers=headers)
     response_data = response.json()
@@ -43,8 +51,8 @@ def process_payment():
         "Authorization": f"Bearer {token}"
     }
 
-    url = "https://cybqa.pesapal.com/pesapalv3/api/Transactions/SubmitOrderRequest"
-    # url = "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest"  # Live URL
+    # url = "https://cybqa.pesapal.com/pesapalv3/api/Transactions/SubmitOrderRequest"
+    url = "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest"  # Live URL
     try:
         data = request.json
         if not data:
@@ -56,7 +64,8 @@ def process_payment():
             "currency": "USD",
             "description": "Payment for Electronics",
             "callback_url": CALLBACK_URL,
-            "notification_id": "90456f7b-db1e-42b3-88aa-dc2cc47994b3",
+            # "notification_id": "90456f7b-db1e-42b3-88aa-dc2cc47994b3",
+            "notification_id": "87872e18-8735-4c16-ad19-dbfc6e9344ce",
             "billing_address": {
                 "email": data.get("email"),
             }
